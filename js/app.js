@@ -18,26 +18,31 @@
  * 
 */
 
-
+const sections = document.getElementsByTagName('section');
+const navBar = document.querySelector('#navbar__list');
 
 /**
  * End Global Variables
  * Start Helper Functions
  * 
 */
-const sections = document.getElementsByTagName('section');
-const navBar = document.querySelector('#navbar__list');
 
 function menu() {
 
     const fragment = document.createDocumentFragment();
 
-    for (let i = 1; i <= sections.length; i++) {
+    for (let i = 0; i < sections.length; i++) {
         const menuList = document.createElement('li');
         const listAnchor = document.createElement('a');
-        listAnchor.innerText = 'section' + i;
-        listAnchor.setAttribute('href', '#anchor' + i);
-        listAnchor.setAttribute('class', 'menu_link')
+        listAnchor.innerText = 'section' + (i + 1);
+        listAnchor.setAttribute('class', 'menu__link');
+
+        //Scroll To Section
+        listAnchor.addEventListener("click", () => {
+            sections[i].scrollIntoView({behavior: "smooth"});
+            }
+        );
+        
         menuList.appendChild(listAnchor);
         fragment.appendChild(menuList);
 
@@ -47,16 +52,29 @@ function menu() {
 }
 menu();
 
-const menuLink = document.querySelectorAll('.menu_link');
-menuLink.forEach(link => {
-    link.addEventListener('click', function() {
-        for(let i = 1; i <= menuLink.length; i++) {
-            const elementToScroll = document.getElementById('section' + i);
-            elementToScroll.scrollIntoView();
+// active section
+function makeActive() {
+    for (let i = 0; i < sections.length; i++) {
+        if(isInViewport(section[i])){
+            section[i].classList.add('your-active-class');
+        } else {
+            section[i].classList.add('your-active-class');
         }
-    })
-})
+    }
+}
+makeActive();
 
+const isInViewport = function (elem) {
+    var bounding = elem.getBoundingClientRect();
+    return (
+        bounding.top >= 0 &&
+        bounding.left >= 0 &&
+        bounding.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        bounding.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+};
+
+window.addEventListener("scroll", makeActive);
 
 /**
  * End Helper Functions
