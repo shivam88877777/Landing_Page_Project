@@ -32,11 +32,12 @@ function menu() {
 
     const fragment = document.createDocumentFragment();
 
-    for (let i = 1; i <= 4; i++) {
+    for (let i = 1; i <= sections.length; i++) {
         const menuList = document.createElement('li');
         const listAnchor = document.createElement('a');
         listAnchor.innerText = 'section' + i;
         listAnchor.setAttribute('href', '#anchor' + i);
+        listAnchor.setAttribute('class', 'menu_link')
         menuList.appendChild(listAnchor);
         fragment.appendChild(menuList);
 
@@ -46,19 +47,15 @@ function menu() {
 }
 menu();
 
-function sectionScroll() {
-    for(let i = 1; i <= 4; i++) {
-        const element = document.getElementById('anchor' + i);
-        element.addEventListener('click', function() {
-            const elementToScroll = document.getElementById('section' + i)
-            elementToScroll.scrollIntoView({ block: 'start', behavior: 'smooth'})
-        })
-    }
-}
-sectionScroll();
-
-
-
+const menuLink = document.querySelectorAll('.menu_link');
+menuLink.forEach(link => {
+    link.addEventListener('click', function() {
+        for(let i = 1; i <= menuLink.length; i++) {
+            const elementToScroll = document.getElementById('section' + i);
+            elementToScroll.scrollIntoView();
+        }
+    })
+})
 
 
 /**
