@@ -23,10 +23,9 @@ const navBar = document.querySelector('#navbar__list');
 
 /**
  * End Global Variables
- * Start Helper Functions
- * 
 */
 
+// build the nav
 function menu() {
 
     const fragment = document.createDocumentFragment();
@@ -37,7 +36,7 @@ function menu() {
         listAnchor.innerText = 'section' + (i + 1);
         listAnchor.setAttribute('class', 'menu__link');
 
-        //Scroll To Section
+        // Scroll to section on link click
         listAnchor.addEventListener("click", () => {
             sections[i].scrollIntoView({behavior: "smooth"});
             }
@@ -52,55 +51,26 @@ function menu() {
 }
 menu();
 
-// active section
+// whether current section is in the viewport or not
+const isInViewport = function (element) {
+
+    const rect = element.getBoundingClientRect(),
+        viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
+    return !(rect.bottom < 0 || rect.top > viewHeight);
+};
+
+// Set sections as active
 function makeActive() {
     for (let i = 0; i < sections.length; i++) {
-        if(isInViewport(section[i])){
-            section[i].classList.add('your-active-class');
+        if(isInViewport(sections[i])){
+            sections[i].classList.add('your-active-class');
         } else {
-            section[i].classList.add('your-active-class');
+            sections[i].classList.remove('your-active-class');
         }
     }
 }
-makeActive();
 
-const isInViewport = function (elem) {
-    var bounding = elem.getBoundingClientRect();
-    return (
-        bounding.top >= 0 &&
-        bounding.left >= 0 &&
-        bounding.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        bounding.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
-};
-
+// listen for scroll events and call makeActive function
 window.addEventListener("scroll", makeActive);
-
-/**
- * End Helper Functions
- * Begin Main Functions
- *
-*/
-
-// build the nav
-
-
-// Add class 'active' to section when near top of viewport
-
-
-// Scroll to anchor ID using scrollTO event
-
-
-/**
- * End Main Functions
- * Begin Events
- *
-*/
-
-// Build menu 
-
-// Scroll to section on link click
-
-// Set sections as active
 
 
